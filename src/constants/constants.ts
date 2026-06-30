@@ -1,4 +1,4 @@
-import routes from '@/routes';
+import routes from '@/routes/routes';
 
 export const APP_TITLE = 'CERTICOS BOOKS';
 
