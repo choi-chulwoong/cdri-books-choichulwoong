@@ -1,6 +1,7 @@
 import { PublicLayout } from '@/components/template/PublicLayout';
 import SearchPage from '@/pages/SearchPage';
 import { Navigate, type RouteObject } from 'react-router-dom';
+import routes from '@/routes';
 
 const publicRoute: RouteObject[] = [
   {
@@ -8,15 +9,15 @@ const publicRoute: RouteObject[] = [
     children: [
       {
         path: '/',
-        element: <Navigate to="/search" replace />,
+        element: <Navigate to={routes.SEARCH} replace />,
       },
       {
-        path: '/search',
+        path: routes.SEARCH,
         element: <SearchPage />,
       },
       {
         path: '*',
-        element: <Navigate to="/search" replace />,
+        element: <Navigate to={routes.SEARCH} replace />,
       },
     ],
   },
