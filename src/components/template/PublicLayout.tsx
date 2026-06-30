@@ -6,7 +6,7 @@ import { AppHeader } from '../organism/AppHeader';
 export function PublicLayout() {
   return (
     <ErrorBoundary FallbackComponent={ErrorPage} onError={(e) => console.error(e)}>
-      <div className="flex w-full max-w-[100vw] flex-col overflow-x-hidden">
+      <div className="flex w-full max-w-[100vw] flex-col items-center">
         <AppHeader />
         <Outlet />
       </div>

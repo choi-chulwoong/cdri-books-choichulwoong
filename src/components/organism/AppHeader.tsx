@@ -10,10 +10,10 @@ const getNavLinkClass = ({ isActive }: { isActive: boolean }) => {
 
 export function AppHeader() {
   return (
-    <header className="flex h-[80px] w-full items-center bg-white">
-      <h1 className="text-title1 px-[160px]">{APP_TITLE}</h1>
+    <header className="sticky top-0 z-10 flex h-[80px] w-full items-center bg-white">
+      <h1 className="text-title1 shrink-0 px-[160px]">{APP_TITLE}</h1>
       <nav className="shrink-0">
-        <ul className="flex gap-[56px]">
+        <ul className="flex gap-[56px] px-[240px]">
           {NAV_ITEMS.map((item) => (
             <li key={item.to}>
               <NavLink to={item.to} className={getNavLinkClass}>
