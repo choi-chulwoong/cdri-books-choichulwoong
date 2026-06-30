@@ -9,7 +9,7 @@
   --color-red: #e84118;
   --color-gray: #dadada;
   --color-lightgray: #f2f4f6;
-  --color-white: #000000;
+  --color-white: #ffffff;
   --color-black: #222222;
 
   /* Text Color */
@@ -24,16 +24,19 @@
     font-family: var(--font-sans);
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
+    color: var(--color-text-primary);
   }
 }
 
 #root {
   position: relative;
   display: flex;
-  width: 100%;
-  height: 100%;
+  width: 1920px;
+  height: auto;
+  max-width: 100%;
   min-height: 100dvh;
   box-sizing: border-box;
+  margin: auto;
 }
 
 html,
@@ -42,7 +45,6 @@ body {
   width: 100%;
   height: 100%;
 }
-
 
 @utility text-title1 {
   font-family: var(--font-noto);
