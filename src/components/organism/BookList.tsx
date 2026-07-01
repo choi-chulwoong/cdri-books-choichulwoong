@@ -1,17 +1,16 @@
 import type { BookDocument } from '@/types/book.dto';
-import { useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import BookDetailItem from '@/components/organism/BookDetailItem';
 import BookListItem from '@/components/organism/BookListItem';
 
 export interface BookListProps {
   books: BookDocument[];
+  wishList: BookDocument[];
+  onToggleWish?: (book: BookDocument) => void;
 }
 
-function BookList({ books }: BookListProps) {
-  /** 현재 펼쳐진 도서의 isbn */
+function BookList({ books, wishList, onToggleWish }: BookListProps) {
   const [expandedIsbn, setExpandedIsbn] = useState<string | null>(null);
-  /** 찜된 도서 isbn 집합 */
-  const [favorites, setFavorites] = useState<Set<string>>(new Set());
 
   const toggleExpand = useCallback((isbn: string) => {
     setExpandedIsbn((prev) => (prev === isbn ? null : isbn));
@@ -21,24 +20,13 @@ function BookList({ books }: BookListProps) {
     setExpandedIsbn(null);
   }, []);
 
-  const toggleFavorite = useCallback((isbn: string) => {
-    setFavorites((prev) => {
-      const next = new Set(prev);
-      if (next.has(isbn)) {
-        next.delete(isbn);
-      } else {
-        next.add(isbn);
-      }
-      return next;
-    });
-  }, []);
-
   return (
     <section className="mt-[36px]">
       <ul className="list-none divide-y divide-[#D2D6DA]">
         {books.map((book) => {
           const isExpanded = expandedIsbn === book.isbn;
-          const isFavorite = favorites.has(book.isbn);
+
+          const isFavorite = wishList.some((item) => item.isbn === book.isbn);
 
           return (
             <li key={book.isbn}>
@@ -46,7 +34,7 @@ function BookList({ books }: BookListProps) {
                 <BookDetailItem
                   book={book}
                   isFavorite={isFavorite}
-                  onToggleFavorite={toggleFavorite}
+                  onToggleFavorite={() => onToggleWish(book)}
                   onCollapse={handleCollapse}
                 />
               ) : (
@@ -60,4 +48,4 @@ function BookList({ books }: BookListProps) {
   );
 }
 
-export default BookList;
+export default memo(BookList);

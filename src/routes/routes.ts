@@ -1,6 +1,6 @@
 const routes = {
   SEARCH: '/search',
-  WISHLIST: '/wish',
+  MYWISH: '/wish',
 };
 
 export default routes;
