@@ -8,17 +8,27 @@ import { memo } from 'react';
 export interface BookListItemProps {
   /** 도서 문서 데이터 */
   book: BookDocument;
+  /** 찜 여부 */
+  isFavorite: boolean;
+  /** 찜 토글 핸들러 */
+  onToggleFavorite: (isbn: string) => void;
   /** 상세보기 토글 핸들러 */
   onToggleExpand: (isbn: string) => void;
 }
 
-function BookListItem({ book, onToggleExpand }: BookListItemProps) {
+function BookListItem({ book, isFavorite, onToggleFavorite, onToggleExpand }: BookListItemProps) {
   const effectivePrice = book.sale_price > 0 ? book.sale_price : book.price;
 
   return (
     <div className="flex items-center p-[16px] pl-[48px]">
       {/* 도서 표지 */}
-      <BookThumbnail thumbnail={book.thumbnail} title={book.title} size="sm" />
+      <BookThumbnail
+        thumbnail={book.thumbnail}
+        title={book.title}
+        size="sm"
+        isFavorite={isFavorite}
+        onToggleFavorite={() => onToggleFavorite(book.isbn)}
+      />
 
       {/* 제목 + 저자 */}
       <BookMeta title={book.title} authors={book.authors} size="sm" />

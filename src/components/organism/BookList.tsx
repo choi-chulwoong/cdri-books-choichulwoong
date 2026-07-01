@@ -34,11 +34,16 @@ function BookList({ books, wishList, onToggleWish }: BookListProps) {
                 <BookDetailItem
                   book={book}
                   isFavorite={isFavorite}
-                  onToggleFavorite={() => onToggleWish(book)}
+                  onToggleFavorite={() => onToggleWish?.(book)}
                   onCollapse={handleCollapse}
                 />
               ) : (
-                <BookListItem book={book} onToggleExpand={toggleExpand} />
+                <BookListItem
+                  book={book}
+                  isFavorite={isFavorite}
+                  onToggleFavorite={() => onToggleWish?.(book)}
+                  onToggleExpand={toggleExpand}
+                />
               )}
             </li>
           );

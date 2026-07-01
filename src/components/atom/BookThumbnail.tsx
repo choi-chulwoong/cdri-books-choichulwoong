@@ -1,5 +1,6 @@
 import LikeFillIcon from '@/assets/images/ic_like_fill.svg';
 import LikeLineIcon from '@/assets/images/ic_like_line.svg';
+import clsx from 'clsx';
 
 export type ThumbnailSize = 'sm' | 'lg';
 
@@ -16,9 +17,14 @@ export interface BookThumbnailProps {
   onToggleFavorite?: () => void;
 }
 
-const sizeMap: Record<ThumbnailSize, string> = {
+const ImageSizeMap: Record<ThumbnailSize, string> = {
   sm: 'w-[48px] h-[68px]',
   lg: 'w-[210px] h-[280px]',
+};
+
+const IconButtonSizeMap: Record<ThumbnailSize, string> = {
+  sm: 'size-[16px]',
+  lg: 'size-[24px]',
 };
 
 export function BookThumbnail({
@@ -29,9 +35,13 @@ export function BookThumbnail({
   onToggleFavorite,
 }: BookThumbnailProps) {
   return (
-    <div className={`relative shrink-0 ${sizeMap[size]}`}>
+    <div className={`relative shrink-0 ${ImageSizeMap[size]}`}>
       {thumbnail ? (
-        <img src={thumbnail} alt={`${title} 표지`} className="h-full w-full rounded object-cover" />
+        <img
+          src={thumbnail}
+          alt={`${title} 표지`}
+          className={clsx('h-full w-full rounded object-cover')}
+        />
       ) : (
         <div className="bg-lightgray flex h-full w-full items-center justify-center rounded" />
       )}
@@ -41,7 +51,10 @@ export function BookThumbnail({
         <button
           type="button"
           onClick={onToggleFavorite}
-          className="absolute top-1 right-1 flex h-6 w-6 cursor-pointer items-center justify-center"
+          className={clsx(
+            'absolute top-1 right-1 flex cursor-pointer items-center justify-center',
+            IconButtonSizeMap[size]
+          )}
         >
           {isFavorite ? <img src={LikeFillIcon} /> : <img src={LikeLineIcon} />}
         </button>
