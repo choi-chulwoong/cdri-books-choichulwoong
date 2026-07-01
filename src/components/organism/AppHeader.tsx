@@ -1,4 +1,4 @@
-import { APP_TITLE, NAV_ITEMS } from '@/constants';
+import { APP_TITLE, NAV_ITEMS } from '@/constants/constants';
 import { NavLink } from 'react-router-dom';
 
 const getNavLinkClass = ({ isActive }: { isActive: boolean }) => {
