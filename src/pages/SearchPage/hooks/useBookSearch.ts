@@ -24,9 +24,10 @@ export function useBookSearch() {
     enabled: !!submittedKeyword,
   });
 
-  const handleSearch = () => {
-    if (!searchValue.trim()) return;
-    setSubmittedKeyword(searchValue.trim());
+  const handleSearch = (keyword?: string) => {
+    const targetKeyword = (keyword !== undefined ? keyword : searchValue).trim();
+    if (!targetKeyword) return;
+    setSubmittedKeyword(targetKeyword);
   };
 
   const books = data?.pages.flatMap((page) => page.documents) ?? [];
