@@ -32,7 +32,7 @@ function SearchInput({
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
-        className="text-body2 text-text-primary placeholder:text-text-subtitle flex-1 bg-transparent outline-none"
+        className="text-body2 placeholder:text-text-subtitle flex-1 bg-transparent outline-none"
       />
     </div>
   );
