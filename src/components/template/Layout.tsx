@@ -1,7 +1,7 @@
 import ErrorPage from '@/pages/ErrorPage';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Outlet } from 'react-router-dom';
-import { AppHeader } from '../organism/AppHeader';
+import { AppHeader } from '@/components/organism/AppHeader';
 
 export function Layout() {
   return (

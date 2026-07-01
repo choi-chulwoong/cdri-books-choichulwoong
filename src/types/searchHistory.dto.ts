@@ -1,4 +1,4 @@
-import type { queryTarget } from '@/apis/book/book.types';
+import type { QueryTarget } from '@/components/organism/DetailSearchPopup';
 
 export interface SearchHistory {
   /** 기록 ID */
@@ -8,5 +8,5 @@ export interface SearchHistory {
   /** 검색 날짜 */
   dateTime: string;
   /** 검색 필드 */
-  queryTarget: queryTarget;
+  queryTarget: QueryTarget;
 }

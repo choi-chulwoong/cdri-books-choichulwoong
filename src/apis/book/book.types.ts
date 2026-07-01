@@ -1,7 +1,5 @@
 import type { BookDocument, BookSearchMeta } from '@/types/book.dto';
 
-export type queryTarget = 'title' | 'isbn' | 'publisher' | 'person';
-
 /**
  * 도서 검색 API 요청 쿼리 파라미터
  */
@@ -29,9 +27,12 @@ export interface GetSearchBookParams {
    * - 'publisher': 출판사
    * - 'person': 인명
    */
-  target?: queryTarget;
+  target?: 'title' | 'isbn' | 'publisher' | 'person';
 }
 
+/**
+ * 도서 검색 API 응답 값
+ */
 export interface GetSearchBookResponse {
   meta: BookSearchMeta;
   documents: BookDocument[];

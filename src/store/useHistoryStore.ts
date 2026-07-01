@@ -1,45 +1,51 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import type { SearchHistory } from '@/types/searchHistory.dto';
+import type { QueryTarget } from '@/components/organism/DetailSearchPopup';
 
 const isDev = import.meta.env.DEV;
 
 interface HistoryStore {
   histories: SearchHistory[];
   actions: {
-    addHistory: (query: string) => void;
+    addHistory: (query: string, target?: QueryTarget) => void;
     deleteHistory: (id: number) => void;
     clearState: () => void;
   };
 }
 
-function calculateUpdatedHistories(histories: SearchHistory[], query: string): SearchHistory[] {
+export function calculateUpdatedHistories(
+  histories: SearchHistory[],
+  query: string,
+  target: QueryTarget = 'title'
+): SearchHistory[] {
   const trimmedQuery = query.trim();
   if (!trimmedQuery) return histories;
 
-  // 1. 중복 키워드가 이미 존재하는지 확인
+  // 지난 검색 기록 중 같은 검색어가 있는지 확인한다
   const existingIndex = histories.findIndex((item) => item.query === trimmedQuery);
 
   if (existingIndex !== -1) {
-    // 존재한다면: 해당 아이템 날짜 최신화 후 맨 앞으로 이동
+    // 존재한다면 해당 아이템을 복사하고 날짜와 타겟을 최신화한다.
     const targetItem = histories[existingIndex];
     const updatedItem: SearchHistory = {
       ...targetItem,
+      queryTarget: target,
       dateTime: new Date().toISOString(),
     };
-    const filtered = histories.filter((_, idx) => idx !== existingIndex);
 
+    const filtered = histories.filter((_, idx) => idx !== existingIndex);
     return [updatedItem, ...filtered];
   }
 
-  // 2. 새로운 검색어인 경우
+  // 새로운 검색어인 경우 추가한다.
   const maxId = histories.reduce((max, item) => Math.max(max, item.id), 0);
 
   const newEntry: SearchHistory = {
     id: maxId + 1,
     query: trimmedQuery,
     dateTime: new Date().toISOString(),
-    queryTarget: 'title',
+    queryTarget: target,
   };
 
   return [newEntry, ...histories].slice(0, 8);
@@ -51,16 +57,18 @@ const useHistoryStore = create<HistoryStore>()(
       (set) => ({
         histories: [],
         actions: {
-          addHistory: (query) => {
+          addHistory: (query, target) => {
             set((state) => ({
-              histories: calculateUpdatedHistories(state.histories, query),
+              histories: calculateUpdatedHistories(state.histories, query, target),
             }));
           },
+
           deleteHistory: (id) => {
             set((state) => ({
               histories: state.histories.filter((item) => item.id !== id),
             }));
           },
+
           clearState: () => {
             set({ histories: [] });
           },
@@ -75,8 +83,7 @@ const useHistoryStore = create<HistoryStore>()(
   )
 );
 
-// 외부 컴포넌트용 커스텀 훅 셀렉터
-export const useHistories = () => useHistoryStore((state) => state.histories);
+export const useHistoryState = () => useHistoryStore((state) => state.histories);
 export const useHistoryActions = () => useHistoryStore((state) => state.actions);
 
 export default useHistoryStore;

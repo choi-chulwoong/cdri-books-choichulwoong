@@ -8,7 +8,6 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   rightIcon?: ReactNode;
-  /** 부모 너비 100% 차지 여부 */
   fullWidth?: boolean;
 }
 
@@ -16,13 +15,13 @@ function Button({
   variant = 'primary',
   size = 'md',
   rightIcon,
-  fullWidth = false,
   children,
   className = '',
+  fullWidth = false,
   ...props
 }: ButtonProps) {
   const base =
-    'inline-flex items-center justify-center gap-[5px] h-[48px] rounded-[8px] cursor-pointer' +
+    'inline-flex items-center justify-center gap-[5px] h-[48px] w-[115px] rounded-[8px] cursor-pointer' +
     'transition-opacity hover:opacity-80 active:opacity-60 ' +
     'disabled:opacity-40 disabled:cursor-not-allowed';
 
@@ -32,8 +31,8 @@ function Button({
   };
 
   const sizeStyles: Record<ButtonSize, string> = {
-    md: ' py-[16px] text-caption w-[115px]',
-    lg: ' py-[12px] text-body w-[240px]',
+    md: ' py-[16px] text-caption ',
+    lg: ' py-[12px] text-body',
   };
 
   return (
@@ -42,7 +41,7 @@ function Button({
         base,
         variantStyles[variant],
         sizeStyles[size],
-        fullWidth ? 'w-full' : '',
+        fullWidth && 'w-full!',
         className
       )}
       {...props}

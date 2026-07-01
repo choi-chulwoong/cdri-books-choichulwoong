@@ -44,7 +44,7 @@ function BookDetailItem({ book, isFavorite, onToggleFavorite, onCollapse }: Book
 
               <div className="mt-[12px] flex flex-col gap-y-3 text-[10px] leading-[16px] font-medium">
                 {book.contents
-                  .split('. ') // '. '을 기준으로 문자열 분리
+                  .split('. ') // 문자열 행 분리
                   .filter((sentence) => sentence.trim() !== '')
                   .map((sentence, index) => (
                     <span key={`${book.isbn}-${index}`}>{sentence.trim()}.</span>
@@ -62,6 +62,7 @@ function BookDetailItem({ book, isFavorite, onToggleFavorite, onCollapse }: Book
             rightIcon={<img src={ChevronUpIcon} />}
             onClick={onCollapse}
             className="shrink-0"
+            fullWidth
           >
             상세보기
           </Button>

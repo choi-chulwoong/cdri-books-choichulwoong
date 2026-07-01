@@ -1,4 +1,5 @@
 import { formatPrice } from '@/utils/common';
+import clsx from 'clsx';
 
 export interface PriceTextProps {
   /** 가격 */
@@ -15,16 +16,14 @@ export function PriceText({ price, label, isOriginal = false }: PriceTextProps) 
       {label && (
         <span className="text-text-subtitle text-[10px] leading-[26px] font-medium">{label}</span>
       )}
-      {isOriginal && (
-        <span className="min-w-[76px] text-[18px] leading-[26px] font-[350] line-through">
-          {formatPrice(price)}
-        </span>
-      )}
-      {!isOriginal && (
-        <span className="min-w-[76px] text-[18px] leading-[26px] font-bold">
-          {formatPrice(price)}
-        </span>
-      )}
+      <span
+        className={clsx(
+          'min-w-[76px] text-[18px] leading-[26px]',
+          isOriginal ? 'font-[350] line-through' : 'font-bold'
+        )}
+      >
+        {formatPrice(price)}
+      </span>
     </span>
   );
 }

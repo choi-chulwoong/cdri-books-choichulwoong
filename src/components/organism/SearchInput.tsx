@@ -4,13 +4,12 @@ import clsx from 'clsx';
 import useClickOutside from '@/helpers/useClickOutside';
 import SearchHistoryList from '@/components/molecule/SearchHistoryList';
 import type { SearchHistory } from '@/types/searchHistory.dto';
+import type { QueryTarget } from './DetailSearchPopup';
 
 export interface SearchInputProps {
-  /** 현재 검색어 */
   value: string;
-  /** 검색어 변경 핸들러 */
   onChange: (value: string) => void;
-  onSearch?: (keyword: string) => void;
+  onSearch?: (keyword: string, target?: QueryTarget) => void;
   histories?: SearchHistory[];
   onDeleteHistory?: (id: number) => void;
 }
@@ -42,7 +41,7 @@ function SearchInput({
     const historyItem = histories.find((item) => item.id === id);
     if (historyItem) {
       onChange(historyItem.query);
-      onSearch?.(historyItem.query);
+      onSearch?.(historyItem.query, historyItem.queryTarget);
     }
     setIsFocused(false);
   };
