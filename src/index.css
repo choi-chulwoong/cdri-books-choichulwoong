@@ -19,6 +19,9 @@
 }
 
 @layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
   html,
   body {
     font-family: var(--font-sans);
